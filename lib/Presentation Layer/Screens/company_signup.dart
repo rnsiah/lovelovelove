@@ -304,7 +304,8 @@ class _CompanySignupPageState extends State<CompanySignupPage> {
                     context.read<CreateCompanyBloc>().add(CompanyAttemptCreate(
                           profile: widget.profile,
                           completedCompany: CompanyCompletion(
-                              // logo: state.logo,
+                            userId: widget.profile.user!,
+                              logo: state.logo,
                               instagram: state.instagram,
                               companyName: state.companyName,
                               description: state.description,
@@ -312,7 +313,7 @@ class _CompanySignupPageState extends State<CompanySignupPage> {
                               companyAddress: state.companyAddress,
                               missionStatement: state.mission,
                               yearStarted: state.yearStarted,
-                              profile: widget.profile),
+                              profile: widget.profile,mainImage: ''),
                         ));
                   } else {
                     context.read<CreateCompanyBloc>().add(

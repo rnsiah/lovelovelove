@@ -77,7 +77,7 @@ void main() async {
           RepositoryProvider(create: (context) => CategoryRepository()),
           RepositoryProvider(create: (context) => CompanyRepository()),
           RepositoryProvider(create: (context) => AllUsersRepository())
-        ], child: MyApp()),
+        ], child: const MyApp()),
       )));
 }
 

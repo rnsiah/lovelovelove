@@ -9,49 +9,50 @@ PODS:
     - Flutter
   - image_picker_ios (0.0.1):
     - Flutter
-  - path_provider_ios (0.0.1):
+  - path_provider_foundation (0.0.1):
     - Flutter
+    - FlutterMacOS
   - share_plus (0.0.1):
     - Flutter
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
-  - Stripe (23.1.1):
-    - StripeApplePay (= 23.1.1)
-    - StripeCore (= 23.1.1)
-    - StripePayments (= 23.1.1)
-    - StripePaymentsUI (= 23.1.1)
-    - StripeUICore (= 23.1.1)
+  - Stripe (23.3.4):
+    - StripeApplePay (= 23.3.4)
+    - StripeCore (= 23.3.4)
+    - StripePayments (= 23.3.4)
+    - StripePaymentsUI (= 23.3.4)
+    - StripeUICore (= 23.3.4)
   - stripe_ios (0.0.1):
     - Flutter
-    - Stripe (~> 23.1.0)
-    - StripeApplePay (~> 23.1.0)
-    - StripeFinancialConnections (~> 23.1.0)
-    - StripePayments (~> 23.1.0)
-    - StripePaymentSheet (~> 23.1.0)
-    - StripePaymentsUI (~> 23.1.0)
-  - StripeApplePay (23.1.1):
-    - StripeCore (= 23.1.1)
-  - StripeCore (23.1.1)
-  - StripeFinancialConnections (23.1.1):
-    - StripeCore (= 23.1.1)
-    - StripeUICore (= 23.1.1)
-  - StripePayments (23.1.1):
-    - StripeCore (= 23.1.1)
-    - StripePayments/Stripe3DS2 (= 23.1.1)
-  - StripePayments/Stripe3DS2 (23.1.1):
-    - StripeCore (= 23.1.1)
-  - StripePaymentSheet (23.1.1):
-    - StripeApplePay (= 23.1.1)
-    - StripeCore (= 23.1.1)
-    - StripePayments (= 23.1.1)
-    - StripePaymentsUI (= 23.1.1)
-  - StripePaymentsUI (23.1.1):
-    - StripeCore (= 23.1.1)
-    - StripePayments (= 23.1.1)
-    - StripeUICore (= 23.1.1)
-  - StripeUICore (23.1.1):
-    - StripeCore (= 23.1.1)
+    - Stripe (~> 23.3.3)
+    - StripeApplePay (~> 23.3.3)
+    - StripeFinancialConnections (~> 23.3.3)
+    - StripePayments (~> 23.3.3)
+    - StripePaymentSheet (~> 23.3.3)
+    - StripePaymentsUI (~> 23.3.3)
+  - StripeApplePay (23.3.4):
+    - StripeCore (= 23.3.4)
+  - StripeCore (23.3.4)
+  - StripeFinancialConnections (23.3.4):
+    - StripeCore (= 23.3.4)
+    - StripeUICore (= 23.3.4)
+  - StripePayments (23.3.4):
+    - StripeCore (= 23.3.4)
+    - StripePayments/Stripe3DS2 (= 23.3.4)
+  - StripePayments/Stripe3DS2 (23.3.4):
+    - StripeCore (= 23.3.4)
+  - StripePaymentSheet (23.3.4):
+    - StripeApplePay (= 23.3.4)
+    - StripeCore (= 23.3.4)
+    - StripePayments (= 23.3.4)
+    - StripePaymentsUI (= 23.3.4)
+  - StripePaymentsUI (23.3.4):
+    - StripeCore (= 23.3.4)
+    - StripePayments (= 23.3.4)
+    - StripeUICore (= 23.3.4)
+  - StripeUICore (23.3.4):
+    - StripeCore (= 23.3.4)
   - url_launcher_ios (0.0.1):
     - Flutter
   - video_player_avfoundation (0.0.1):
@@ -62,7 +63,7 @@ DEPENDENCIES:
   - flutter_email_sender (from `.symlinks/plugins/flutter_email_sender/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
-  - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - stripe_ios (from `.symlinks/plugins/stripe_ios/ios`)
@@ -90,8 +91,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/geolocator_apple/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
-  path_provider_ios:
-    :path: ".symlinks/plugins/path_provider_ios/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/ios"
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
   sqflite:
@@ -108,22 +109,22 @@ SPEC CHECKSUMS:
   flutter_email_sender: 02d7443217d8c41483223627972bfdc09f74276b
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
-  image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
-  path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
+  image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
+  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
-  Stripe: ff389e265eeffb891b871b62b2fa644e30e69338
-  stripe_ios: 728603d6aa71a76f00dd05e202cba7d5b357a4be
-  StripeApplePay: 4413b4f21c0206094df20775aa5e8e063b9c8b5d
-  StripeCore: 6318dff8f7e42125c6e8b671ac54a6e82804705a
-  StripeFinancialConnections: 3586b42043921d46eadf59bb0dcd2ac17ff109f2
-  StripePayments: 7e903765860f1cc914041069edc9cf5e202f5ef7
-  StripePaymentSheet: 49602fb474a86e7624a082f256fd786b2eac80cb
-  StripePaymentsUI: e4b2be5b5b5edb774fc8667a71429194c39ce2a4
-  StripeUICore: 149ba9dda3f48dff829d2ebb2e3d455bc59dc0ed
-  url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
-  video_player_avfoundation: e489aac24ef5cf7af82702979ed16f2a5ef84cff
+  Stripe: 7393b16fe555d4a68e6555044e7b57eff11ae547
+  stripe_ios: 1be2c6f10dcf1e33c14625ad02099e0ff3cfe6d8
+  StripeApplePay: 174b09c0211134417e340c68af199a3dd34f3cd6
+  StripeCore: babb08ec2b961f7cde8663dad3b4cbb77e0ae63b
+  StripeFinancialConnections: 484096f2dc5d3c20cc24a5ad4d261953ba806ef0
+  StripePayments: 71bf62ccdacefc4b68b46a02a7f2492aeba252b3
+  StripePaymentSheet: 722ea7bea092c243d771122fe3572a9c84512704
+  StripePaymentsUI: fd08081c4be73c16322dc76a1878140520a9df2e
+  StripeUICore: ed68cbd5ad0626e0760e772f8c82d96cae9b829b
+  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
+  video_player_avfoundation: 81e49bb3d9fb63dccf9fa0f6d877dc3ddbeac126
 
 PODFILE CHECKSUM: cc1f88378b4bfcf93a6ce00d2c587857c6008d3b
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.12.0

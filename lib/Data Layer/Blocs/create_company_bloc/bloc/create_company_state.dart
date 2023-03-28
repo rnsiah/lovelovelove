@@ -8,12 +8,15 @@ class CreateCompanyState extends Equatable {
   final String description;
   final String facebook;
   final String instagram;
-
+  final String logo;
   final String wehsite;
   final String yearStarted;
   final FormSubmissionStatus? formStatus;
+  final String mainImage;
   CreateCompanyState(
       {this.profile,
+      this.logo = '',
+      this.mainImage='',
       this.formStatus = const InitialFormStatus(),
       this.wehsite = '',
       this.companyAddress = '',

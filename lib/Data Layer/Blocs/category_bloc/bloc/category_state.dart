@@ -6,7 +6,7 @@ class CategoryState extends Equatable {
   final List<Category> categoryList;
   final CategoryStatus status;
 
-  CategoryState(
+ const CategoryState(
       {this.categoryList = const <Category>[],
       this.status = CategoryStatus.initial});
 

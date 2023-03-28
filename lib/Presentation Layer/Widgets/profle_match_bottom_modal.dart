@@ -19,8 +19,8 @@ class _ProfileMatchBottomSheetState extends State<ProfileMatchBottomSheet> {
       child: widget.profile.userdonations!.length > 1
           ? ListView.builder(
               itemCount: widget.profile.userdonations!.length,
-              itemBuilder: (context, int) {
-                if (widget.profile.userdonations![int].nonprofit != null) {
+              itemBuilder: (context, i) {
+                if (widget.profile.userdonations![i].nonprofit != null) {
                   return GestureDetector(
                     onLongPress: () {
                       showDialog(
@@ -49,9 +49,9 @@ class _ProfileMatchBottomSheetState extends State<ProfileMatchBottomSheet> {
                     child: Card(
                       child: ListTile(
                         title: Text(
-                            widget.profile.userdonations![int].nonprofit!.name),
+                            widget.profile.userdonations![i].nonprofit!.name),
                         subtitle:
-                            Text(widget.profile.userdonations![int].amount),
+                            Text(widget.profile.userdonations![i].amount),
                         trailing: MaterialButton(
                           child: const Text(
                             'NonProfit \n Match',
@@ -62,7 +62,7 @@ class _ProfileMatchBottomSheetState extends State<ProfileMatchBottomSheet> {
                       ),
                     ),
                   );
-                } else if (widget.profile.userdonations![int].atrocity !=
+                } else if (widget.profile.userdonations![i].atrocity !=
                     null) {
                   return GestureDetector(
                     onLongPress: () {
@@ -88,9 +88,9 @@ class _ProfileMatchBottomSheetState extends State<ProfileMatchBottomSheet> {
                     child: Card(
                       child: ListTile(
                         title: Text(
-                            widget.profile.userdonations![int].atrocity!.title),
+                            widget.profile.userdonations![i].atrocity!.title),
                         subtitle:
-                            Text(widget.profile.userdonations![int].amount),
+                            Text(widget.profile.userdonations![i].amount),
                         trailing: MaterialButton(
                           child: const Text(
                             'Atrocity \n Match',
@@ -132,7 +132,7 @@ class _ProfileMatchBottomSheetState extends State<ProfileMatchBottomSheet> {
                         onPressed: () {},
                       ),
                       title: const Text('General Altrue Donation'),
-                      subtitle: Text(widget.profile.userdonations![int].amount),
+                      subtitle: Text(widget.profile.userdonations![i].amount),
                     ),
                   ),
                 );

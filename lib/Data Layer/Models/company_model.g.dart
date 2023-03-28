@@ -130,6 +130,8 @@ CompanyCompletion _$CompanyCompletionFromJson(Map<String, dynamic> json) =>
       profile: Profile.fromJson(json['owner'] as Map<String, dynamic>),
       wehsite: json['website_address'] as String?,
       yearStarted: json['year_started'] as String,
+      mainImage: json['main_image'] as String,
+      userId: json['user_id'] as int,
     );
 
 Map<String, dynamic> _$CompanyCompletionToJson(CompanyCompletion instance) =>

@@ -12,18 +12,18 @@ class IndividualShirtBloc
     extends Bloc<IndividualShirtEvent, IndividualShirtState> {
   ShirtRepository shirtRepository;
 
-  IndividualShirtBloc(this.shirtRepository) : super(IndiShirtLoadInProgress());
+  IndividualShirtBloc(this.shirtRepository) : super(IndiShirtLoadInProgress()){
+    on<IndividualShirtLoaded>(_individualShirtLoaded);
+  }
 
-  Stream<IndividualShirtState> mapEventToState(
-    IndividualShirtEvent event,
-  ) async* {
-    if (event is IndividualShirtLoaded) {
-      try {
-        Shirt shirt = await shirtRepository.fetchShirt(event.shirt.id!);
-        yield IndiShirtLoadSuccess(shirt: shirt);
-      } catch (e) {
-        IndiShirtLoadFailure();
-      }
+  void _individualShirtLoaded(IndividualShirtLoaded event, Emitter<IndividualShirtState> emit) async {
+    try {
+      Shirt shirt = await shirtRepository.fetchShirt(event.shirt.id!);
+      emit(IndiShirtLoadSuccess(shirt: shirt));
+    } catch (e) {
+      emit(IndiShirtLoadFailure());
     }
   }
+
+
 }

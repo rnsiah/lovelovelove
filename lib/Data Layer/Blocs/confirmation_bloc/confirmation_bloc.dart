@@ -11,24 +11,31 @@ class ConfirmatioBloc extends Bloc<ConfirmationEvent, ConfirmationState> {
   final ValidationCubit validationCubit;
 
   ConfirmatioBloc({required this.userRepository, required this.validationCubit})
-      : super(ConfirmationState());
-
-  Stream<ConfirmationState> mapEventToState(ConfirmationEvent event) async* {
-    if (event is ConfirmationCodeChanged) {
-      yield state.copyWith(code: event.code);
-    } else if (event is ConfirmationSubmitted) {
-      yield state.copyWith(formStatus: FormSubmitting());
-      try {
-        User user = await userRepository.confirmSignUpWithoutConfirmation(
-            confirmationCode: event.code,
-            email: validationCubit.credentials!.email);
-        await userRepository.persistToken(user: user);
-        validationCubit.launchSession(user);
-
-        yield state.copyWith(formStatus: SubmissionSuccess());
-      } catch (e) {
-        yield state.copyWith(formStatus: SubmissionFaiiled('Failed'));
+      : super(ConfirmationState()){
+        on<ConfirmationCodeChanged>(_confirmationCodeChanged);
+        on<ConfirmationSubmitted>(_confirmationSubmitted);
+        
+        
       }
+
+  void _confirmationCodeChanged(ConfirmationCodeChanged event, Emitter<ConfirmationState> emit) async {
+    emit(state.copyWith(code: event.code));
+  }
+
+  void _confirmationSubmitted(ConfirmationSubmitted event, Emitter<ConfirmationState> emit) async {
+    emit(state.copyWith(formStatus: FormSubmitting()));
+    try {
+      User user = await userRepository.confirmSignUpWithoutConfirmation(
+          confirmationCode: event.code,
+          email: validationCubit.credentials!.email);
+      await userRepository.persistToken(user: user);
+      validationCubit.launchSession(user);
+
+      emit(state.copyWith(formStatus: SubmissionSuccess()));
+    } catch (e) {
+      emit(state.copyWith(formStatus: SubmissionFaiiled('Failed')));
     }
   }
+
+    
 }

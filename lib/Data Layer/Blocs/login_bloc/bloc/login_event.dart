@@ -10,13 +10,13 @@ abstract class LoginEvent extends Equatable {
 class LoginEmailChange extends LoginEvent {
   final String email;
 
-  LoginEmailChange(this.email);
+ const LoginEmailChange(this.email);
 }
 
 class LoginPassWordChange extends LoginEvent {
   final String password;
 
-  LoginPassWordChange(this.password);
+ const LoginPassWordChange(this.password);
 }
 
 class LoginSubmitted extends LoginEvent {

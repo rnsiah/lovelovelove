@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,15 +9,16 @@ part 'category_state.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   final CategoryRepository categoryRepository;
-  CategoryBloc({required this.categoryRepository}) : super(CategoryInitial());
+  CategoryBloc({required this.categoryRepository}) : super(CategoryInitial())
+  {
 
-  @override
-  Stream<CategoryState> mapEventToState(
-    CategoryEvent event,
-  ) async* {
-    if (event is FetchCategory) {
-      List<Category> categoryList = await categoryRepository.fetchCatgegories();
-      yield state.copyWith(categoryList: categoryList);
-    }
+  on<FetchCategory>(_fetchCategory);
   }
+
+  void _fetchCategory(FetchCategory event, Emitter<CategoryState> emit) async {
+    List<Category> categoryList =
+        await categoryRepository.fetchCatgegories();
+    emit(state.copyWith(categoryList: categoryList)); 
+}
+
 }

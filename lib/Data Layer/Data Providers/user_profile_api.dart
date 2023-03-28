@@ -6,7 +6,7 @@ import 'dart:async';
 class ApiProvider {
   // ignore: unused_field
 
-  final String _mobileBaseUrl = 'http://525f-206-198-215-154.ngrok.io/';
+  final String _mobileBaseUrl = 'http://9eb7-2601-2c6-481-2d50-95c8-4941-4cd2-277c.ngrok.io/';
   final String _baseUrl = "http://127.0.0.1:8000/";
 
   Future<dynamic> getUserAuthenticatedData(String url, String key) async {
@@ -28,7 +28,7 @@ class ApiProvider {
   }
 
   Future uploadImage(File imge, String path) async {
-    final uri = Uri.parse(_baseUrl + 'api/$path');
+    final uri = Uri.parse(_mobileBaseUrl + 'api/$path');
     var request = http.MultipartRequest('POST', uri);
     var takenPicture = await http.MultipartFile.fromPath("file", imge.path);
     request.files.add(takenPicture);
@@ -45,7 +45,7 @@ class ApiProvider {
     var responseJson;
     String body = json.encode(data.toJson());
     try {
-      final response = await http.post(Uri.parse(_baseUrl + url),
+      final response = await http.post(Uri.parse(_mobileBaseUrl + url),
           headers: {
             "Content-Type": "application/json",
             "Authorization": "Token $key",
@@ -65,7 +65,7 @@ class ApiProvider {
 
     String body = json.encode(data.toJson());
     try {
-      final response = await http.put(Uri.parse(_baseUrl + url),
+      final response = await http.put(Uri.parse(_mobileBaseUrl + url),
           headers: {
             "Content-Type": "application/json",
             "Authorization": "Token $key",
@@ -107,7 +107,7 @@ class ApiProvider {
 }
 
 class NonAuthenticatedApiProvider {
-  final String _mobileBaseUrl = 'http://525f-206-198-215-154.ngrok.io';
+  final String _mobileBaseUrl = 'http://9eb7-2601-2c6-481-2d50-95c8-4941-4cd2-277c.ngrok.io/';
   final String _baseUrl = "http://127.0.0.1:8000/";
 
   Future<dynamic> get(String url) async {

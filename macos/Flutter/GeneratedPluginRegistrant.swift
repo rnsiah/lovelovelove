@@ -6,7 +6,7 @@ import FlutterMacOS
 import Foundation
 
 import geolocator_apple
-import path_provider_macos
+import path_provider_foundation
 import share_plus
 import sqflite
 import url_launcher_macos

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:lovelovelove/Data%20Layer/Models/non_profit_model.dart';
 import 'package:lovelovelove/Data%20Layer/Models/user_model.dart';
 import 'package:lovelovelove/Data%20Layer/Repositories/nonProfit_repository.dart';

@@ -196,11 +196,16 @@ Map<String, dynamic> _$ProfileRepresentationToJson(
 ProfileFollow _$ProfileFollowFromJson(Map<String, dynamic> json) =>
     ProfileFollow(
       id: json['id'] as int,
-      action: json['action'],
+      action: $enumDecode(_$FollowActionEnumMap, json['action']),
     );
 
 Map<String, dynamic> _$ProfileFollowToJson(ProfileFollow instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'action': instance.action,
+      'action': _$FollowActionEnumMap[instance.action]!,
     };
+
+const _$FollowActionEnumMap = {
+  FollowAction.follow: 'follow',
+  FollowAction.unfollow: 'unfollow',
+};

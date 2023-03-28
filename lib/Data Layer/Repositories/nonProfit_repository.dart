@@ -9,7 +9,7 @@ import 'package:lovelovelove/Data%20Layer/Models/user_model.dart';
 class NonProfitRespository {
   final NonAuthenticatedApiProvider _provider = NonAuthenticatedApiProvider();
   ApiProvider authProvider = ApiProvider();
-  final String host = 'http://525f-206-198-215-154.ngrok.io';
+  final String host = 'http://9eb7-2601-2c6-481-2d50-95c8-4941-4cd2-277c.ngrok.io';
 
   Future<List<NonProfit>> fetchNonProfits() async {
     List<NonProfit> nonProfitList = [];

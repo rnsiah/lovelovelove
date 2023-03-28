@@ -118,11 +118,14 @@ class CompanyCompletion {
   final String companyAddress;
   final String description;
   final String? facebook;
+  final String? logo;
   final String? instagram;
   @JsonKey(name: 'website_address')
   final String? wehsite;
   @JsonKey(name: 'year_started')
   final String yearStarted;
+  final List<Category>? categories;
+
 
   CompanyCompletion(
       {required this.companyAddress,
@@ -133,7 +136,7 @@ class CompanyCompletion {
       this.missionStatement,
       required this.profile,
       this.wehsite,
-      required this.yearStarted});
+      required this.yearStarted, required int userId, this.logo, this.categories, required String mainImage});
 
   factory CompanyCompletion.fromJson(Map<String, dynamic> data) =>
       _$CompanyCompletionFromJson(data);

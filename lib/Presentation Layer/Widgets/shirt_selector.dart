@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 class HomePageS extends StatefulWidget {
-  HomePageS({Key? key}) : super(key: key);
+  const HomePageS({Key? key}) : super(key: key);
 
   @override
   _HomePageSState createState() => _HomePageSState();
@@ -12,6 +12,7 @@ class _HomePageSState extends State<HomePageS> {
 
   @override
   void initState() {
+    super.initState();
     // TODO: implement initState
     pageController = PageController(initialPage: 1, viewportFraction: 0.8);
   }

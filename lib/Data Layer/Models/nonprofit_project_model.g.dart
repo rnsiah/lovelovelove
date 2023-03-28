@@ -12,12 +12,24 @@ NonProfitProject _$NonProfitProjectFromJson(Map<String, dynamic> json) =>
       currentFunds: (json['currentFunds'] as num?)?.toDouble(),
       isActive: json['is_active'] as bool?,
       information: json['information'] as String?,
-      atrocity: json['atrocity'],
-      cause: json['cause'],
-      followers: json['followers'] as List<ProfileRepresentation>?,
+      atrocity: json['atrocity'] == null
+          ? null
+          : Atrocity.fromJson(json['atrocity'] as Map<String, dynamic>),
+      cause: json['cause'] == null
+          ? null
+          : Category.fromJson(json['cause'] as Map<String, dynamic>),
+      followers: (json['followers'] as List<dynamic>?)
+          ?.map(
+              (e) => ProfileRepresentation.fromJson(e as Map<String, dynamic>))
+          .toList(),
       fundraisingGoal: json['fundraising_goal'] as String?,
-      nonprofit: json['nonprofit'],
-      supporters: json['supporters'] as List<ProfileRepresentation>?,
+      nonprofit: json['nonprofit'] == null
+          ? null
+          : NonProfit.fromJson(json['nonprofit'] as Map<String, dynamic>),
+      supporters: (json['supporters'] as List<dynamic>?)
+          ?.map(
+              (e) => ProfileRepresentation.fromJson(e as Map<String, dynamic>))
+          .toList(),
       title: json['title'] as String,
     );
 
@@ -26,11 +38,11 @@ Map<String, dynamic> _$NonProfitProjectToJson(NonProfitProject instance) =>
       'id': instance.id,
       'information': instance.information,
       'title': instance.title,
-      'supporters': instance.supporters,
-      'followers': instance.followers,
-      'nonprofit': instance.nonprofit,
-      'cause': instance.cause,
-      'atrocity': instance.atrocity,
+      'supporters': instance.supporters?.map((e) => e.toJson()).toList(),
+      'followers': instance.followers?.map((e) => e.toJson()).toList(),
+      'nonprofit': instance.nonprofit?.toJson(),
+      'cause': instance.cause?.toJson(),
+      'atrocity': instance.atrocity?.toJson(),
       'currentFunds': instance.currentFunds,
       'is_active': instance.isActive,
       'fundraising_goal': instance.fundraisingGoal,

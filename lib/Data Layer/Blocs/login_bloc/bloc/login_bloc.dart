@@ -37,7 +37,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(state.copyWith(formStatus: FormSubmitting()));
     try {
       User user = await userRepository.authenticate(
-          email: event.email, password: event.password);
+          email:event.email, password:event.password);
 
       emit(state.copyWith(formStatus: SubmissionSuccess()));
       sessionBLoc.add(LoggedIn(user: user));

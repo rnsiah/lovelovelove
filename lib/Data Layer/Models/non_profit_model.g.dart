@@ -14,7 +14,9 @@ NonProfit _$NonProfitFromJson(Map<String, dynamic> json) => NonProfit(
       facebook: json['facebook'] as String?,
       yearStarted: json['year_started'] as int?,
       missionStatement: json['mission_statement'] as String?,
-      projects: json['projects'] as List<NonProfitProject>?,
+      projects: (json['projects'] as List<dynamic>?)
+          ?.map((e) => NonProfitProject.fromJson(e as Map<String, dynamic>))
+          .toList(),
       visionStatement: json['vision_statement'] as String?,
       websiteUrl: json['website_url'] as String?,
       category: (json['category'] as List<dynamic>?)
@@ -30,14 +32,25 @@ NonProfit _$NonProfitFromJson(Map<String, dynamic> json) => NonProfit(
       avgDonation: (json['avgDonation'] as num?)?.toDouble(),
       mainImage: json['main_image'] as String?,
       balance: (json['total_balance'] as num?)?.toDouble(),
-      companiesSupporting:
-          json['companiesSupporting'] as List<CompaniesSupporting>?,
-      contributors: json['contributors'] as List<Profile>?,
-      owner: json['owner'],
-      matchingPartnerships: json['matchingPartnerships']
-          as List<CompanyNonProfitMatchRelationship>?,
-      links: json['links'] as List<Link>?,
-    )..recentDonors = json['recentDonors'] as List<ProfileRepresentation>?;
+      companiesSupporting: (json['companiesSupporting'] as List<dynamic>?)
+          ?.map((e) => CompaniesSupporting.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      contributors: (json['contributors'] as List<dynamic>?)
+          ?.map((e) => Profile.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      owner: json['owner'] == null
+          ? null
+          : Profile.fromJson(json['owner'] as Map<String, dynamic>),
+      matchingPartnerships: (json['matchingPartnerships'] as List<dynamic>?)
+          ?.map((e) => CompanyNonProfitMatchRelationship.fromJson(
+              e as Map<String, dynamic>))
+          .toList(),
+      links: (json['links'] as List<dynamic>?)
+          ?.map((e) => Link.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )..recentDonors = (json['recentDonors'] as List<dynamic>?)
+        ?.map((e) => ProfileRepresentation.fromJson(e as Map<String, dynamic>))
+        .toList();
 
 Map<String, dynamic> _$NonProfitToJson(NonProfit instance) => <String, dynamic>{
       'id': instance.id,
@@ -54,14 +67,16 @@ Map<String, dynamic> _$NonProfitToJson(NonProfit instance) => <String, dynamic>{
       'shirtList': instance.shirtList?.map((e) => e.toJson()).toList(),
       'main_image': instance.mainImage,
       'total_balance': instance.balance,
-      'companiesSupporting': instance.companiesSupporting,
-      'contributors': instance.contributors,
-      'owner': instance.owner,
-      'links': instance.links,
-      'projects': instance.projects,
+      'companiesSupporting':
+          instance.companiesSupporting?.map((e) => e.toJson()).toList(),
+      'contributors': instance.contributors?.map((e) => e.toJson()).toList(),
+      'owner': instance.owner?.toJson(),
+      'links': instance.links?.map((e) => e.toJson()).toList(),
+      'projects': instance.projects?.map((e) => e.toJson()).toList(),
       'avgDonation': instance.avgDonation,
-      'recentDonors': instance.recentDonors,
-      'matchingPartnerships': instance.matchingPartnerships,
+      'recentDonors': instance.recentDonors?.map((e) => e.toJson()).toList(),
+      'matchingPartnerships':
+          instance.matchingPartnerships?.map((e) => e.toJson()).toList(),
       'facebook': instance.facebook,
     };
 
@@ -69,7 +84,7 @@ NonProfitCompletion _$NonProfitCompletionFromJson(Map<String, dynamic> json) =>
     NonProfitCompletion(
       website: json['website_url'] as String?,
       instagram: json['instagram'] as String?,
-      profile: json['owner'],
+      profile: Profile.fromJson(json['owner'] as Map<String, dynamic>),
       name: json['name'] as String,
       description: json['description'] as String,
       facebook: json['facebook'] as String?,
@@ -81,7 +96,7 @@ NonProfitCompletion _$NonProfitCompletionFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$NonProfitCompletionToJson(
         NonProfitCompletion instance) =>
     <String, dynamic>{
-      'owner': instance.profile,
+      'owner': instance.profile.toJson(),
       'year_started': instance.yearStarted,
       'name': instance.name,
       'mission_statement': instance.missionStatement,
