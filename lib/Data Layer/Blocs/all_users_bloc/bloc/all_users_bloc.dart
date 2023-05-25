@@ -12,21 +12,36 @@ class AllUsersBloc extends Bloc<AllUsersEvent, AllUsersState> {
   AllUsersRepository allUsersRepository = AllUsersRepository();
 
   AllUsersBloc({required this.allUsersRepository, required this.userRepository})
-      : super(const AllUsersState(status: ProfileListStatus.initial));
-
-  @override
-  Stream<AllUsersState> mapEventToState(AllUsersEvent event) async* {
-    if (event is FetchFindUserList) {
-      yield state.copyWith(status: ProfileListStatus.loading);
-      try {
-        List<ProfileRepresentation> list =
-            await allUsersRepository.getAllProfiles();
-        yield state.copyWith(
-            userList: list, status: ProfileListStatus.successful);
-      } catch (e) {
-        print(e.toString());
-        yield state.copyWith(status: ProfileListStatus.failure);
+      : super(const AllUsersState(status: ProfileListStatus.initial)){
+    on<FetchFindUserList>(_onFetchFindUserList);
       }
-    }
-  }
+
+      void _onFetchFindUserList(FetchFindUserList event, Emitter<AllUsersState> emit) async {
+        emit(state.copyWith(status: ProfileListStatus.loading));
+        try {
+          List<ProfileRepresentation> list =
+              await allUsersRepository.getAllProfiles();
+          emit(state.copyWith(
+              userList: list, status: ProfileListStatus.successful));
+        } catch (e) {
+          print(e.toString());
+          emit(state.copyWith(status: ProfileListStatus.failure));
+        }
+      }
+
+  // @override
+  // Stream<AllUsersState> mapEventToState(AllUsersEvent event) async* {
+  //   if (event is FetchFindUserList) {
+  //     yield state.copyWith(status: ProfileListStatus.loading);
+  //     try {
+  //       List<ProfileRepresentation> list =
+  //           await allUsersRepository.getAllProfiles();
+  //       yield state.copyWith(
+  //           userList: list, status: ProfileListStatus.successful);
+  //     } catch (e) {
+  //       print(e.toString());
+  //       yield state.copyWith(status: ProfileListStatus.failure);
+  //     }
+  //   }
+  // }
 }

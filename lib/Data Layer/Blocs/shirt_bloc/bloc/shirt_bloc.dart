@@ -14,6 +14,7 @@ class ShirtBloc extends Bloc<ShirtEvent, ShirtState> {
 
   ShirtBloc({required this.shirtRepository}) : super(ShirtState()) {
     fetchfeaturedShirtsOnLogin();
+    
   }
 
   fetchfeaturedShirtsOnLogin() async {

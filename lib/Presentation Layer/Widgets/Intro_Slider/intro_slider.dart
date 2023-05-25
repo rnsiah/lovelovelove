@@ -5,7 +5,7 @@ import 'package:lovelovelove/Data%20Layer/Blocs/validationCubit.dart';
 import 'package:lovelovelove/Data%20Layer/Repositories/user_repository.dart';
 
 class IntroductionSlider extends StatefulWidget {
-  IntroductionSlider({
+  const IntroductionSlider({
     Key? key,
   }) : super(key: key);
 
@@ -23,45 +23,62 @@ class _IntroductionSliderState extends State<IntroductionSlider> {
     super.initState();
     slides.add(const ContentConfig(
       pathImage: 'images/Altrue Logo White.png',
-      centerWidget: Text(
-        'With Altrue, Give in a new Way',
-        style: TextStyle(color: Colors.amber),
-      ),
-      title: 'Welcome',
-      description: 'With Atrue, Give in a new Way',
-      styleDescription: TextStyle(color: Colors.amber, fontSize: 16),
+      backgroundImage: 'images/cftp-official-visual-landscape.png',
+      backgroundImageFit: BoxFit.cover,
+      title: 'Ignite Your Impact',
+      description: 'Join a community of changemakers and make a difference in the world. Our app empowers you to amplify your philanthropic efforts and create positive change.',
+      styleDescription: TextStyle(color: Colors.amber, fontSize: 17, fontWeight: FontWeight.bold),
       maxLineTitle: 2,
       backgroundColor: Color(0xfff5a623),
       styleTitle: TextStyle(
-          color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),
+        height: .8,
+          color: Colors.white, fontSize: 80, fontWeight: FontWeight.bold),
     ));
     slides.add(const ContentConfig(
-        pathImage: 'images/Altrue Logo White.png',
-        description: 'With Atrue, Give in a new Way',
-        styleDescription: TextStyle(color: Colors.amber, fontSize: 16),
-        title: 'Learn',
+        pathImage: 'images/tmock-min.png',
+        description: 'Express your commitment to change by donning our impactful shirts. Each shirt bears a unique QR code, enabling others to easily contribute and support the cause that matters to you.',
+        styleDescription: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold ),
+        title: 'Make a Statement',
         maxLineTitle: 2,
         styleTitle: TextStyle(
-            color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),
+        height: .8,
+          color: Colors.amber, fontSize: 70, fontWeight: FontWeight.bold),
+        backgroundColor: Colors.black));
+    slides.add(const ContentConfig(
+      centerWidget: Text('data'),
+      backgroundImage: 'images/Social-as-a-tool-for-change-image-2.jpeg',
+      backgroundImageFit: BoxFit.cover,
+        foregroundImageFit: BoxFit.cover,
+        title: 'Connect, Donate, Inspire',
+        description: ' Discover meaningful causes, connect with nonprofits, and donate to projects that align with your passions. Together, we can inspire a brighter future for all.',
+        styleDescription: TextStyle(color: Colors.amber, fontSize: 16, fontWeight: FontWeight.bold),
+        maxLineTitle: 2,
+        styleTitle: TextStyle(
+        height: .8,
+          color: Colors.white, fontSize: 80, fontWeight: FontWeight.bold),
         backgroundColor: Colors.black));
     slides.add(const ContentConfig(
         pathImage: 'images/Altrue Logo White.png',
-        title: 'Do Something',
-        description: 'With Atrue, Give in a new Way',
-        styleDescription: TextStyle(color: Colors.amber, fontSize: 16),
+        backgroundImage: 'images/hyatt-volunteers-min.png',
+        backgroundImageFit: BoxFit.cover,
+        description: 'Discover how leading companies are driving positive change. Explore their philanthropic partnerships, support their causes, and unlock exclusive benefits. Join forces with impactful corporations to make an even greater impact together.',
+        styleDescription: TextStyle(color: Colors.amber, fontSize: 16, fontWeight: FontWeight.bold),
+        title: 'Companies Making a Difference',
         maxLineTitle: 2,
-        styleTitle: TextStyle(
-            color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),
+        styleTitle:TextStyle(
+        height: .8,
+          color: Colors.white, fontSize: 62, fontWeight: FontWeight.bold),
         backgroundColor: Colors.black));
-    slides.add(const ContentConfig(
-        pathImage: 'images/Altrue Logo White.png',
-        description: 'With Atrue, Give in a new Way',
-        styleDescription: TextStyle(color: Colors.amber, fontSize: 16),
-        title: 'Get Rewarded',
-        maxLineTitle: 2,
-        styleTitle: TextStyle(
-            color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),
-        backgroundColor: Colors.black));
+        slides.add(const ContentConfig(
+          title: "Empower Your Impact Today",
+          styleTitle: TextStyle(
+        height: .8,
+          color: Colors.amberAccent, fontSize: 70, fontWeight: FontWeight.bold),description: ' Sign up now and embark on your philanthropic journey. Wear your cause proudly, create lasting change, and empower your impact with every scan. Start making a difference today!',styleDescription: TextStyle(color: 
+          Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+            backgroundImage: 'images/tmock-min.png',
+          backgroundImageFit: BoxFit.cover
+        
+        ), );
   }
 
   onDonePress() {
@@ -77,14 +94,20 @@ class _IntroductionSliderState extends State<IntroductionSlider> {
       Icons.navigate_next,
       color: Colors.white,
       size: 35,
+      shadows: [
+        Shadow(
+          color: Colors.black,
+          blurRadius: 10,
+        )],
     );
   }
+
 
   Widget doneBtn(BuildContext context) {
     return IconButton(
         icon: const Icon(
           Icons.done,
-          color: Colors.green,
+          color: Colors.white,
           size: 35,
         ),
         onPressed: () => Navigator.of(context).popAndPushNamed('/signUp'));
@@ -93,8 +116,13 @@ class _IntroductionSliderState extends State<IntroductionSlider> {
   Widget skipBtn() {
     return const Icon(
       Icons.skip_next,
-      color: Colors.amber,
+      color: Colors.white,
       size: 35,
+      shadows: [
+        Shadow(
+          color: Colors.black,
+          blurRadius: 10,
+        )],
     );
   }
 
@@ -114,31 +142,48 @@ class _IntroductionSliderState extends State<IntroductionSlider> {
         width: double.infinity,
         height: double.infinity,
         child: Container(
-          margin: const EdgeInsets.only(bottom: 160, top: 60),
+          decoration: BoxDecoration(
+            
+            image: DecorationImage(colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.dstATop),
+              
+              image: AssetImage(current.backgroundImage??'images/tmock-min.png'),fit: BoxFit.cover,alignment: Alignment.topCenter)),
+          
           child: ListView(
             children: [
-              GestureDetector(
-                child: Image.asset(
-                  current.pathImage!,
-                  width: 200,
-                  height: 200,
-                  fit: BoxFit.contain,
+              // GestureDetector(
+              //   child: Image.asset(
+              //     current.pathImage?? current.backgroundImage!,
+                
+              //     fit: BoxFit.cover,
+              //   ),
+              // ),
+              Padding(
+                padding: const EdgeInsets.all(7.0),
+                child: Container(decoration: const BoxDecoration( 
+                  color: Color.fromARGB(9, 229, 229, 229)
+                ),
+                  margin: const EdgeInsets.only(top: 40),
+                  child: Text(
+                    
+              
+                  current.title??current.widgetTitle!.toString(),
+                    style: current.styleTitle,
+                    textAlign: TextAlign.right,
+                    
+                  ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 20),
+              Padding(
+                padding: const EdgeInsets.all(18.0),
                 child: Text(
-                  current.title!,
-                  style: current.styleTitle,
-                  textAlign: TextAlign.center,
+                  
+                  current.description!,
+                  style: current.styleDescription,
+                  textAlign: TextAlign.start,
+                  
+                  maxLines: 6,
+                  
                 ),
-              ),
-              Text(
-                current.description!,
-                style: current.styleDescription,
-                textAlign: TextAlign.center,
-                maxLines: 5,
-                overflow: TextOverflow.ellipsis,
               )
             ],
           ),
@@ -151,6 +196,17 @@ class _IntroductionSliderState extends State<IntroductionSlider> {
   @override
   Widget build(BuildContext context) {
     return IntroSlider(
+      navigationBarConfig: NavigationBarConfig(navPosition: NavPosition.bottom, padding: const EdgeInsets.all(10)),
+      indicatorConfig: const IndicatorConfig(
+        
+        isShowIndicator: true,
+        sizeIndicator: 20,
+        indicatorWidget:  Icon(
+          Icons.circle,
+          color: Colors.white,
+          size: 12,
+        ),),
+
       renderSkipBtn: skipBtn(),
       skipButtonStyle: myButtonStyle(),
       renderNextBtn: nextBtn(),
@@ -167,6 +223,7 @@ class _IntroductionSliderState extends State<IntroductionSlider> {
       },
       scrollPhysics: const BouncingScrollPhysics(),
       onTabChangeCompleted: onTabChangeCompleted,
+      curveScroll: Curves.bounceIn,
     );
   }
 }

@@ -19,8 +19,8 @@ class AtrocityBlocBloc extends Bloc<AtrocityBlocEvent, AtrocityBlocState> {
       : super(const AtrocityBlocState()) {
     fetchAtrocitiesonStart();
     on<AtrocityListFetched>(_atrocityListFetched);
-    // on<AtrocityItemFteched>(_atrocityItemFetched);
-    // on<AtrocityListFetchedByCategory>(_atrocityListFetchedByCategory);
+    on<AtrocityItemFteched>(_atrocityItemFetched);
+    on<AtrocityListFetchedByCategory>(_atrocityListFetchedByCategory);
   }
 
   void _atrocityListFetched(
@@ -60,47 +60,65 @@ class AtrocityBlocBloc extends Bloc<AtrocityBlocEvent, AtrocityBlocState> {
     }
   }
 
-  Stream<AtrocityBlocState> mapEventToState(
-    AtrocityBlocEvent event,
-  ) async* {
-    if (event is AtrocityListFetched) {
-      List<Atrocity> atrocity = await atrocityRepository.getAtrocities();
-
-      for (var i = 0; i < atrocity.length; i++) {
-        yield state.copyWith(
-            atrocities: atrocity, status: AtrocityStatus.success);
+  void _atrocityListFetchedByCategory(AtrocityListFetchedByCategory event, Emitter<AtrocityBlocState>emit)async{
+    AtrocityBlocState state = this.state;
+    emit(state.copyWith(categoryChange: false));
+    try {
+      List<Atrocity> atrocityList = await atrocityRepository.getAtrocityListByCategory(event.category);
+      if (atrocityList.isNotEmpty) {
+        AtrocityBlocState newState = state.copyWith(
+            atrocities: state.atrocities,
+            atrocityCategoryList: atrocityList,
+            status: AtrocityStatus.success,
+            categoryChange: true);
+        emit(newState);
       }
-    }
-    if (event is AtrocityItemFteched) {
-      await atrocityRepository.getAtrocity(event.atrocity.id!);
-    }
-    if (event is AtrocityListFetchedByCategory) {
-      yield state.copyWith(categoryChange: false);
-      try {
-        List<Atrocity> atrocityList =
-            await atrocityRepository.getAtrocityListByCategory(event.category);
-        if (atrocityList.isNotEmpty) {
-          AtrocityBlocState newState = state.copyWith(
-              atrocities: state.atrocities,
-              atrocityCategoryList: atrocityList,
-              status: AtrocityStatus.success,
-              categoryChange: true);
-          yield newState;
-        }
-      } catch (e) {
-        print(e.toString());
-      }
-      if (event is FeaturedAtrocityListFetched) {
-        yield state.copyWith(status: AtrocityStatus.initial);
-        try {
-          List<Atrocity> atrocityList =
-              await atrocityRepository.getFeaturedAtrocities();
-          yield state.copyWith(
-              featuredAtrocities: atrocityList, status: AtrocityStatus.success);
-        } catch (e) {
-          print(e.toString());
-        }
-      }
-    }
+    } catch (e) {
+      print(e.toString());
+    } 
   }
+
+  // Stream<AtrocityBlocState> mapEventToState(
+  //   AtrocityBlocEvent event,
+  // ) async* {
+  //   if (event is AtrocityListFetched) {
+  //     List<Atrocity> atrocity = await atrocityRepository.getAtrocities();
+
+  //     for (var i = 0; i < atrocity.length; i++) {
+  //       yield state.copyWith(
+  //           atrocities: atrocity, status: AtrocityStatus.success);
+  //     }
+  //   }
+  //   if (event is AtrocityItemFteched) {
+  //     await atrocityRepository.getAtrocity(event.atrocity.id!);
+  //   }
+  //   if (event is AtrocityListFetchedByCategory) {
+  //     yield state.copyWith(categoryChange: false);
+  //     try {
+  //       List<Atrocity> atrocityList =
+  //           await atrocityRepository.getAtrocityListByCategory(event.category);
+  //       if (atrocityList.isNotEmpty) {
+  //         AtrocityBlocState newState = state.copyWith(
+  //             atrocities: state.atrocities,
+  //             atrocityCategoryList: atrocityList,
+  //             status: AtrocityStatus.success,
+  //             categoryChange: true);
+  //         yield newState;
+  //       }
+  //     } catch (e) {
+  //       print(e.toString());
+  //     }
+  //     if (event is FeaturedAtrocityListFetched) {
+  //       yield state.copyWith(status: AtrocityStatus.initial);
+  //       try {
+  //         List<Atrocity> atrocityList =
+  //             await atrocityRepository.getFeaturedAtrocities();
+  //         yield state.copyWith(
+  //             featuredAtrocities: atrocityList, status: AtrocityStatus.success);
+  //       } catch (e) {
+  //         print(e.toString());
+  //       }
+  //     }
+  //   }
+  // }
 }

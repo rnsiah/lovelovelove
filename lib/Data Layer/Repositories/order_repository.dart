@@ -6,7 +6,7 @@ import 'package:lovelovelove/Data%20Layer/Models/order_model.dart';
 import 'package:lovelovelove/Data%20Layer/Models/user_model.dart';
 
 class OrderRepository {
-  final String host = 'http://9eb7-2601-2c6-481-2d50-95c8-4941-4cd2-277c.ngrok.io';
+  final String host = 'https://e5a8-2601-2c6-481-2d50-5185-4c94-6251-af8.ngrok.io';
   final ApiProvider _apiProvider = ApiProvider();
   // ignore: unused_field
   final NonAuthenticatedApiProvider _nonauthapi = NonAuthenticatedApiProvider();

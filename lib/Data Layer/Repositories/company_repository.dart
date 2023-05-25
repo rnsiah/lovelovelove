@@ -11,7 +11,7 @@ class CompanyRepository {
   ApiProvider provider = ApiProvider();
   NonAuthenticatedApiProvider nonauthprov = NonAuthenticatedApiProvider();
   UserRepository userRepository = UserRepository();
-  final String host = 'http://9eb7-2601-2c6-481-2d50-95c8-4941-4cd2-277c.ngrok.io';
+  final String host = 'https://e5a8-2601-2c6-481-2d50-5185-4c94-6251-af8.ngrok.io';
 
   Future<List<ForProfitCompany>> getCompanyList({required User user}) async {
     List<ForProfitCompany> companies = [];

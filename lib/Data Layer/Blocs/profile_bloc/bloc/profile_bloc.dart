@@ -18,7 +18,122 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final UserRepository userRepository;
 
   ProfileBloc({required this.userRepository})
-      : super(ProfileState(status: ProfileStatus.initial));
+      : super(const ProfileState(status: ProfileStatus.initial)){
+    on<FetchProfile>(_fetchProfile);
+    on<FetchProfileAutoLogin>(_fetchProfileAutoLogin);
+    on<AddShirt>(_addShirt);
+    on<AddAtrocity>(_addAtrocity);
+    // on<AddOrderItem>(_addOrderItem);
+    on<AddFollower>(_addFollower);
+    on<RemoveFollower>(_removeFollower);
+    
+    } 
+
+    void _fetchProfile(FetchProfile event, Emitter<ProfileState> emit) async {
+       try {
+        User? user = await userRepository.userDao.getCurrentUser(0);
+        Profile profile = await userRepository.getProfileFromApi(user: user!);
+        ProfileState newState = state.copyWith(
+            profile: profile, user: user, status: ProfileStatus.successfull);
+        emit (newState);
+        print('profile has been updated');
+      } catch (e) {
+        print(e.toString());
+      }
+      emit (state.copyWith(
+          profile: state.profile, status: ProfileStatus.failure));
+    }
+
+    void _fetchProfileAutoLogin(FetchProfileAutoLogin event, Emitter<ProfileState> emit) async {
+      try {
+        User? user = await userRepository.userDao.getCurrentUser(0);
+        Profile profile = await userRepository.getProfileFromApi(user: user!);
+        ProfileState newState = state.copyWith(
+            profile: profile, user: user, status: ProfileStatus.successfull);
+        emit (newState);
+        print('profile has been updated');
+      } catch (e) {
+        print(e.toString());
+      }
+      emit (state.copyWith(
+          profile: state.profile, status: ProfileStatus.failure));
+    }
+
+    void _addShirt(AddShirt event, Emitter<ProfileState> emit) async {
+      emit (state.copyWith(status: ProfileStatus.updating));
+      try {
+        await userRepository.addShirtToProfileList(shirt: event.addedShirt);
+        Profile profile =
+            await userRepository.getProfileFromApi(user: state.user!);
+        emit (state.copyWith(
+            profile: profile,
+            status: ProfileStatus.successfull,
+            user: state.user!));
+      } catch (e) {
+        print(e.toString());
+      }
+    }
+
+    void _addAtrocity(AddAtrocity event, Emitter<ProfileState>emit)async {
+      emit (state.copyWith(status: ProfileStatus.updating));
+      try {
+        await userRepository.addAtrocityToProfileList(atrocity: event.atrocity);
+        Profile profile =
+            await userRepository.getProfileFromApi(user: state.user!);
+        emit (state.copyWith(
+            profile: profile, status: ProfileStatus.successfull));
+      } catch (e) {
+        print(e.toString());
+        emit (state.copyWith(status: ProfileStatus.failure));
+      }
+    }
+
+    void _addFollower(AddFollower event, Emitter<ProfileState>emit)async{
+        try {
+        await userRepository.manageFollowers(
+          manageFollower: event.interaction,
+        );
+        Profile profile =
+            await userRepository.fetchProfile(id: state.profile!.user!);
+        ProfileState newState =
+            state.copyWith(profile: profile, status: ProfileStatus.successfull);
+        emit (newState);
+      } catch (e) {
+        e.toString();
+        state.copyWith(status: ProfileStatus.failure);
+      }
+    }
+
+    void _removeFollower(RemoveFollower event, Emitter<ProfileState>emit)async{
+        try {
+        await userRepository.manageFollowers(
+          manageFollower: event.interaction,
+        );
+        Profile profile =
+            await userRepository.fetchProfile(id: state.profile!.user!);
+        ProfileState newState =
+            state.copyWith(profile: profile, status: ProfileStatus.successfull);
+        emit (newState);
+      } catch (e) {
+        e.toString();
+        state.copyWith(status: ProfileStatus.failure);
+      }
+    }
+
+    // void _addOrderItem(AddOrderItem event, Emitter<ProfileState>emit)async{
+    //   emit (state.copyWith(status: ProfileStatus.updating));
+    //   try {
+    //     await userRepository.addOrderItemToProfileList(orderItem: event.orderItem);
+    //     Profile profile =
+    //         await userRepository.getProfileFromApi(user: state.user!);
+    //     emit (state.copyWith(
+    //         profile: profile, status: ProfileStatus.successfull));
+    //   } catch (e) {
+    //     print(e.toString());
+    //     emit (state.copyWith(status: ProfileStatus.failure));
+    //   }
+    // }
+
 
   autoUploadProfile() async {
     User? user = await userRepository.userDao.getCurrentUser(0);
@@ -35,127 +150,129 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
+  
+
   fetchQR(Profile profile) {
     return profile.qrCode;
   }
 
-  Stream<ProfileState> mapEventToState(
-    ProfileEvent event,
-  ) async* {
-    if (event is FetchProfile) {
-      try {
-        User? user = await userRepository.userDao.getCurrentUser(0);
-        Profile profile = await userRepository.getProfileFromApi(user: user!);
-        ProfileState newState = state.copyWith(
-            profile: profile, user: user, status: ProfileStatus.successfull);
-        yield (newState);
-        print('profile has been updated');
-      } catch (e) {
-        print(e.toString());
-      }
-      yield state.copyWith(
-          profile: state.profile, status: ProfileStatus.failure);
-    }
-    if (event is FetchProfileAutoLogin) {
-      yield (state.copyWith(
-          profile: event.profile, status: ProfileStatus.successfull));
-    }
-    if (event is AddShirt) {
-      yield state.copyWith(status: ProfileStatus.updating);
-      try {
-        await userRepository.addShirtToProfileList(shirt: event.addedShirt);
-        Profile profile =
-            await userRepository.getProfileFromApi(user: state.user!);
-        yield (state.copyWith(
-            profile: profile,
-            status: ProfileStatus.successfull,
-            user: state.user!));
-      } catch (e) {
-        print(e.toString());
-      }
-    }
-    if (event is AddNonProfit) {
-      yield state.copyWith(status: ProfileStatus.updating);
-      try {
-        await userRepository.addNonProfitToProfileList(
-            nonprofit: event.nonProfit);
-        Profile profile =
-            await userRepository.getProfileFromApi(user: state.user!);
-        yield (state.copyWith(
-            profile: profile, status: ProfileStatus.successfull));
-      } catch (e) {
-        print(e.toString());
-        yield state.copyWith(status: ProfileStatus.failure);
-      }
-    }
-    if (event is AddAtrocity) {
-      yield state.copyWith(status: ProfileStatus.updating);
-      try {
-        await userRepository.addAtrocityToProfileList(atrocity: event.atrocity);
-        Profile profile =
-            await userRepository.getProfileFromApi(user: state.user!);
-        yield state.copyWith(
-            profile: profile, status: ProfileStatus.successfull);
-      } catch (e) {
-        print(e.toString());
-      }
-    }
-    if (event is ChangeProfilePicture) {
-      yield state.copyWith(status: ProfileStatus.updating);
-      try {
-        await userRepository.changeProfilePicture(
-            profilePic: event.profilePicture);
-        Profile profile =
-            await userRepository.getProfileFromApi(user: state.user!);
-        yield state.copyWith(
-            profile: profile, status: ProfileStatus.successfull);
-      } catch (e) {
-        print(e.toString());
-        yield state.copyWith(status: ProfileStatus.failure);
-      }
-    }
-    if (event is AddFollower) {
-      try {
-        await userRepository.manageFollowers(
-          manageFollower: event.interaction,
-        );
-        Profile profile =
-            await userRepository.fetchProfile(id: state.profile!.user!);
-        ProfileState newState =
-            state.copyWith(profile: profile, status: ProfileStatus.successfull);
-        yield (newState);
-      } catch (e) {
-        e.toString();
-        state.copyWith(status: ProfileStatus.failure);
-      }
-    }
-    if (event is RemoveFollower) {
-      try {
-        await userRepository.manageFollowers(
-          manageFollower: event.interaction,
-        );
-      } catch (e) {
-        e.toString();
-        state.copyWith(status: ProfileStatus.failure);
-      }
-      Profile profile =
-          await userRepository.fetchProfile(id: state.profile!.user!);
-      ProfileState newState =
-          state.copyWith(profile: profile, status: ProfileStatus.successfull);
+  // Stream<ProfileState> mapEventToState(
+  //   ProfileEvent event,
+  // ) async* {
+  //   if (event is FetchProfile) {
+  //     try {
+  //       User? user = await userRepository.userDao.getCurrentUser(0);
+  //       Profile profile = await userRepository.getProfileFromApi(user: user!);
+  //       ProfileState newState = state.copyWith(
+  //           profile: profile, user: user, status: ProfileStatus.successfull);
+  //       yield (newState);
+  //       print('profile has been updated');
+  //     } catch (e) {
+  //       print(e.toString());
+  //     }
+  //     yield state.copyWith(
+  //         profile: state.profile, status: ProfileStatus.failure);
+  //   }
+  //   if (event is FetchProfileAutoLogin) {
+  //     yield (state.copyWith(
+  //         profile: event.profile, status: ProfileStatus.successfull));
+  //   }
+  //   if (event is AddShirt) {
+  //     yield state.copyWith(status: ProfileStatus.updating);
+  //     try {
+  //       await userRepository.addShirtToProfileList(shirt: event.addedShirt);
+  //       Profile profile =
+  //           await userRepository.getProfileFromApi(user: state.user!);
+  //       yield (state.copyWith(
+  //           profile: profile,
+  //           status: ProfileStatus.successfull,
+  //           user: state.user!));
+  //     } catch (e) {
+  //       print(e.toString());
+  //     }
+  //   }
+  //   if (event is AddNonProfit) {
+  //     yield state.copyWith(status: ProfileStatus.updating);
+  //     try {
+  //       await userRepository.addNonProfitToProfileList(
+  //           nonprofit: event.nonProfit);
+  //       Profile profile =
+  //           await userRepository.getProfileFromApi(user: state.user!);
+  //       yield (state.copyWith(
+  //           profile: profile, status: ProfileStatus.successfull));
+  //     } catch (e) {
+  //       print(e.toString());
+  //       yield state.copyWith(status: ProfileStatus.failure);
+  //     }
+  //   }
+  //   if (event is AddAtrocity) {
+  //     yield state.copyWith(status: ProfileStatus.updating);
+  //     try {
+  //       await userRepository.addAtrocityToProfileList(atrocity: event.atrocity);
+  //       Profile profile =
+  //           await userRepository.getProfileFromApi(user: state.user!);
+  //       yield state.copyWith(
+  //           profile: profile, status: ProfileStatus.successfull);
+  //     } catch (e) {
+  //       print(e.toString());
+  //     }
+  //   }
+  //   if (event is ChangeProfilePicture) {
+  //     yield state.copyWith(status: ProfileStatus.updating);
+  //     try {
+  //       await userRepository.changeProfilePicture(
+  //           profilePic: event.profilePicture);
+  //       Profile profile =
+  //           await userRepository.getProfileFromApi(user: state.user!);
+  //       yield state.copyWith(
+  //           profile: profile, status: ProfileStatus.successfull);
+  //     } catch (e) {
+  //       print(e.toString());
+  //       yield state.copyWith(status: ProfileStatus.failure);
+  //     }
+  //   }
+  //   if (event is AddFollower) {
+  //     try {
+  //       await userRepository.manageFollowers(
+  //         manageFollower: event.interaction,
+  //       );
+  //       Profile profile =
+  //           await userRepository.fetchProfile(id: state.profile!.user!);
+  //       ProfileState newState =
+  //           state.copyWith(profile: profile, status: ProfileStatus.successfull);
+  //       yield (newState);
+  //     } catch (e) {
+  //       e.toString();
+  //       state.copyWith(status: ProfileStatus.failure);
+  //     }
+  //   }
+  //   if (event is RemoveFollower) {
+  //     try {
+  //       await userRepository.manageFollowers(
+  //         manageFollower: event.interaction,
+  //       );
+  //     } catch (e) {
+  //       e.toString();
+  //       state.copyWith(status: ProfileStatus.failure);
+  //     }
+  //     Profile profile =
+  //         await userRepository.fetchProfile(id: state.profile!.user!);
+  //     ProfileState newState =
+  //         state.copyWith(profile: profile, status: ProfileStatus.successfull);
 
-      yield (newState);
-    }
+  //     yield (newState);
+  //   }
 
-    if (event is LogOut) {
-      yield (new ProfileState());
-    }
+  //   if (event is LogOut) {
+  //     yield (new ProfileState());
+  //   }
 
-    // if (event is AddProfilePicture){
-    //   User? user = await userRepository.userDao.getCurrentUser(0);
-    //   Profile profile = await userRepository.getProfileFromApi(user: user!);
-    //   try{
-    //     await userRepository.add
-    //   }
-    // }
-  }
+  //   // if (event is AddProfilePicture){
+  //   //   User? user = await userRepository.userDao.getCurrentUser(0);
+  //   //   Profile profile = await userRepository.getProfileFromApi(user: user!);
+  //   //   try{
+  //   //     await userRepository.add
+  //   //   }
+  //   // }
+  
 }

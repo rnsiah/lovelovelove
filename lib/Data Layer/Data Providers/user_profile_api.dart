@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:convert';
@@ -6,11 +7,11 @@ import 'dart:async';
 class ApiProvider {
   // ignore: unused_field
 
-  final String _mobileBaseUrl = 'http://9eb7-2601-2c6-481-2d50-95c8-4941-4cd2-277c.ngrok.io/';
+  final String _mobileBaseUrl = 'https://e5a8-2601-2c6-481-2d50-5185-4c94-6251-af8.ngrok.io/';
   final String _baseUrl = "http://127.0.0.1:8000/";
 
   Future<dynamic> getUserAuthenticatedData(String url, String key) async {
-    var responseJson;
+    dynamic  responseJson;
 
     try {
       final response = await http.get(
@@ -28,12 +29,14 @@ class ApiProvider {
   }
 
   Future uploadImage(File imge, String path) async {
-    final uri = Uri.parse(_mobileBaseUrl + 'api/$path');
+    final uri = Uri.parse('${_mobileBaseUrl}api/$path');
     var request = http.MultipartRequest('POST', uri);
     var takenPicture = await http.MultipartFile.fromPath("file", imge.path);
     request.files.add(takenPicture);
     var response = await request.send();
-    print(response);
+    if (kDebugMode) {
+      print(response);
+    }
   }
 
   Future<http.Response> postAuthenticatedData(
@@ -42,7 +45,7 @@ class ApiProvider {
     int altId,
     dynamic data,
   ) async {
-    var responseJson;
+    dynamic responseJson;
     String body = json.encode(data.toJson());
     try {
       final response = await http.post(Uri.parse(_mobileBaseUrl + url),
@@ -51,7 +54,9 @@ class ApiProvider {
             "Authorization": "Token $key",
           },
           body: body);
-      print(response);
+      if (kDebugMode) {
+        print(response);
+      }
       responseJson = _response(response);
     } on SocketException {
       throw FetchDataException('You Are Not Connected To The Internet');
@@ -71,7 +76,9 @@ class ApiProvider {
             "Authorization": "Token $key",
           },
           body: body);
-      print(response);
+      if (kDebugMode) {
+        print(response);
+      }
       responseJson = _response(response);
     } on SocketException {
       throw FetchDataException('No Internet Connection');
@@ -89,7 +96,9 @@ class ApiProvider {
         return responseJson;
       case 200:
         var responseJson = json.decode(utf8.decode(response.bodyBytes));
-        print(responseJson);
+        if (kDebugMode) {
+          print(responseJson);
+        }
         return responseJson;
       case 400:
         throw BadRequestException(response.body.toString());
@@ -107,11 +116,11 @@ class ApiProvider {
 }
 
 class NonAuthenticatedApiProvider {
-  final String _mobileBaseUrl = 'http://9eb7-2601-2c6-481-2d50-95c8-4941-4cd2-277c.ngrok.io/';
+  final String _mobileBaseUrl = 'https://e5a8-2601-2c6-481-2d50-5185-4c94-6251-af8.ngrok.io/';
   final String _baseUrl = "http://127.0.0.1:8000/";
 
   Future<dynamic> get(String url) async {
-    var responseJson;
+   dynamic responseJson;
     try {
       final response =
           await http.get(Uri.parse(_mobileBaseUrl + url), headers: {
@@ -129,7 +138,9 @@ class NonAuthenticatedApiProvider {
       case 200:
         var responseJson = json.decode(utf8.decode(response.bodyBytes));
 
-        print(responseJson);
+        if (kDebugMode) {
+          print(responseJson);
+        }
         return responseJson;
       case 400:
         throw BadRequestException(response.body.toString());
@@ -147,11 +158,12 @@ class NonAuthenticatedApiProvider {
 }
 
 class CustomException implements Exception {
-  final _message;
-  final _prefix;
+  final dynamic _message;
+  final dynamic _prefix;
 
   CustomException([this._message, this._prefix]);
 
+  @override
   String toString() {
     return "$_prefix$_message";
   }

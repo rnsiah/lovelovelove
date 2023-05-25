@@ -171,7 +171,7 @@ class _MyAppState extends State<MyApp> {
                 userProfileEditBloc: context.read<UserProfileEditBloc>(),
                 userRepository: context.read<UserRepository>()),
             child: Builder(builder: (context) {
-              return AuthNavigator();
+              return const AuthNavigator();
             }),
           );
         }), onGenerateRoute: (RouteSettings settings) {

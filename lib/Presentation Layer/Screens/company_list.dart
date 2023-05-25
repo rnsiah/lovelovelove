@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lovelovelove/Data%20Layer/Blocs/bloc/company_list_bloc.dart';
+import 'package:lovelovelove/Data%20Layer/Models/company_model.dart';
 import 'package:lovelovelove/Data%20Layer/Repositories/category_repository.dart';
 import 'package:lovelovelove/Data%20Layer/Repositories/company_repository.dart';
 
@@ -124,7 +125,7 @@ class _CompanyListState extends State<CompanyList> {
                 builder: (context, state) {
                   return Expanded(
                     child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 2),
+                        padding: const EdgeInsets.symmetric(horizontal: 2),
                         child: GridView.builder(
                             itemCount: state.companies.length,
                             gridDelegate:
@@ -133,40 +134,12 @@ class _CompanyListState extends State<CompanyList> {
                                     mainAxisSpacing: 13,
                                     childAspectRatio: .75,
                                     crossAxisCount: 2),
-                            itemBuilder: (context, index) => GestureDetector(
-                                  onTap: () {
-                                    print(state.companies[index].name);
-                                    Navigator.of(context).pushNamed(
-                                        '/companyDetails',
-                                        arguments: state.companies[index]);
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.all(8),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                        ),
-                                        child: Image.network(
-                                          state.companies[index].logo!,
-                                          scale: .7,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 2),
-                                        child: Text(
-                                          state.companies[index].name,
-                                          style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ))),
+                            itemBuilder: (context, index) =>  CompanyCard(
+                                  company: state.companies[index],
+                                  press: () => Navigator.pushNamed(
+                                      context, '/company_details',
+                                      arguments: state.companies[index]),
+                            ))),
                   );
                 },
               ),
@@ -175,5 +148,49 @@ class _CompanyListState extends State<CompanyList> {
         ),
       ),
     );
+  }
+}
+
+class CompanyCard extends StatelessWidget {
+
+  final ForProfitCompany company;
+  final Function press;
+  const CompanyCard({
+    super.key, required this.company, required this.press
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+          onTap: () {
+            press();
+          },
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.circular(16),
+                ),
+                child: Image.network(
+                  company.logo!,
+                  scale: .7,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 2),
+                child: Text(
+                  company.name,
+                  style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        );
   }
 }
