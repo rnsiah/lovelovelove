@@ -11,6 +11,7 @@ import 'package:lovelovelove/Presentation%20Layer/Screens/atrocity_details.dart'
 import 'package:lovelovelove/Presentation%20Layer/Screens/atrocity_list.dart';
 import 'package:lovelovelove/Presentation%20Layer/Screens/cause_details.dart';
 import 'package:lovelovelove/Presentation%20Layer/Screens/cause_list.dart';
+import 'package:lovelovelove/Presentation%20Layer/Screens/companies_list.dart';
 import 'package:lovelovelove/Presentation%20Layer/Screens/company_dashboard.dart';
 import 'package:lovelovelove/Presentation%20Layer/Screens/company_home.dart';
 import 'package:lovelovelove/Presentation%20Layer/Screens/company_list.dart';
@@ -125,7 +126,8 @@ Widget _buildRoute(
         profile: argument.profile,
       );
     case '/companies':
-      return CompanyList();
+      Profile profile = arguments as Profile;
+      return CompaniesListScreen(profile: profile );
     case '/companyDetails':
       ForProfitCompany company = arguments as ForProfitCompany;
       return CompanYDetailPage(company: company);

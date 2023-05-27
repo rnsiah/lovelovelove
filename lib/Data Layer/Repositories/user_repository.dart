@@ -18,7 +18,7 @@ class UserRepository {
   final userDao = UserDao();
   final _apiProvider = ApiProvider();
 
-  final String host = 'https://e5a8-2601-2c6-481-2d50-5185-4c94-6251-af8.ngrok.io/';
+  final String host = 'https://cef2-2601-2c6-481-2d50-3069-abe4-3d4a-e1b6.ngrok.io/';
 
   Future introDone() async {
     await userDao.introDone();

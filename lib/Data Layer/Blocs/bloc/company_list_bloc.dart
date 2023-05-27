@@ -12,7 +12,7 @@ class CompanyListBloc extends Bloc<CompanyListEvent, CompanyListState> {
   final CompanyRepository companyRepository = CompanyRepository();
   CompanyListBloc() : super(const CompanyListState()){
     on<FetchCompanyList>(_onFetchCompanyList);
-    on<CompanyListFetchedByCategory>(_onCompanyListFetchedByCategory);
+    on<FetchCompanyListByCategory>(_fetchCompanyListByCategory);
   }
 
   void _onFetchCompanyList(FetchCompanyList event, Emitter<CompanyListState> emit) async {
@@ -20,6 +20,7 @@ class CompanyListBloc extends Bloc<CompanyListEvent, CompanyListState> {
     try {
       List<ForProfitCompany> company =
           await companyRepository.getCompanyList(user: event.user);
+          print(company.toString());
       emit(state.copyWith(
           companies: company, status: CompanyListStatus.success));
     } catch (e) {
@@ -28,12 +29,13 @@ class CompanyListBloc extends Bloc<CompanyListEvent, CompanyListState> {
     }
   }
 
-  void _onCompanyListFetchedByCategory(CompanyListFetchedByCategory event, Emitter<CompanyListState>emit)async{
-    emit(state.copyWith(status: CompanyListStatus.loading));
+  void _fetchCompanyListByCategory(FetchCompanyListByCategory event, Emitter<CompanyListState>emit)async{
+    CompanyListState state= this.state;
+    emit(state.copyWith(categoryChange: false));
     try {
       List<ForProfitCompany> company =
           await companyRepository.getCompanyListByCategory(
-              user: event.user, category: event.category);
+               category: event.category);
       emit(state.copyWith(
           companies: company, status: CompanyListStatus.success));
     } catch (e) {

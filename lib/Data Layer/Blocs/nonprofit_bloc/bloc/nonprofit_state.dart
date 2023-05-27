@@ -9,7 +9,7 @@ class NonprofitState extends Equatable {
   final bool categoryChange;
   final List<NonProfit> featuredNonProfits;
 
-  NonprofitState(
+  const NonprofitState(
       {this.nonprofitList = const <NonProfit>[],
       this.status = NonProfitStatus.initial,
       this.categoryChange = false,

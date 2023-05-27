@@ -11,7 +11,7 @@ class CompanyRepository {
   ApiProvider provider = ApiProvider();
   NonAuthenticatedApiProvider nonauthprov = NonAuthenticatedApiProvider();
   UserRepository userRepository = UserRepository();
-  final String host = 'https://e5a8-2601-2c6-481-2d50-5185-4c94-6251-af8.ngrok.io';
+  final String host = 'https://cef2-2601-2c6-481-2d50-3069-abe4-3d4a-e1b6.ngrok.io';
 
   Future<List<ForProfitCompany>> getCompanyList({required User user}) async {
     List<ForProfitCompany> companies = [];
@@ -23,10 +23,10 @@ class CompanyRepository {
   }
 
   Future<List<ForProfitCompany>> getCompanyListByCategory(
-      {required Category category, required User user}) async {
+      {required Category category}) async {
     List<ForProfitCompany> companies = [];
-    final response = await provider.getUserAuthenticatedData(
-        'api/companies/$category', user.key!);
+    final response = await nonauthprov.get(
+        'api/companies/?category=${category.id}}');
     for (var responses in response) {
       companies.add(ForProfitCompany.fromJson(responses));
     }

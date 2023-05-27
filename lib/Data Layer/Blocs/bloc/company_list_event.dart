@@ -7,15 +7,14 @@ abstract class CompanyListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class CompanyListFetchedByCategory extends CompanyListEvent {
+class FetchCompanyListByCategory extends CompanyListEvent {
   final Category category;
-  final User user;
 
-  const CompanyListFetchedByCategory(
-      {required this.category, required this.user});
+  const FetchCompanyListByCategory(
+      {required this.category,});
 
   @override
-  List<Object> get props => [category, user];
+  List<Object> get props => [category,];
 }
 
 class FeaturedCompanyListFetched extends CompanyListEvent {}
@@ -28,8 +27,8 @@ class FetchCompanyList extends CompanyListEvent {
   List<Object> get props => [];
 }
 
-class FetchCompanyListByCategory extends CompanyListEvent {
-  final Category category;
+// class FetchCompanyListByCategory extends CompanyListEvent {
+//   final Category category;
 
-  const FetchCompanyListByCategory({required this.category});
-}
+//   const FetchCompanyListByCategory({required this.category});
+// }

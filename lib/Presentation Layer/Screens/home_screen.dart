@@ -416,7 +416,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 context
                                     .read<CompanyListBloc>()
                                     .add(FetchCompanyList(user: widget.user));
-                                Navigator.of(context).pushNamed('/companies');
+                                Navigator.of(context).pushNamed('/companies', arguments: widget.profileBloc.state.profile);
                               },
                               child: const Text('Companies',
                                   style: TextStyle(color: Colors.white))),

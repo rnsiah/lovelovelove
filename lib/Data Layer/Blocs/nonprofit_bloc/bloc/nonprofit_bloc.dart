@@ -12,7 +12,7 @@ part 'nonprofit_state.dart';
 class NonprofitBloc extends Bloc<NonprofitEvent, NonprofitState> {
   final NonProfitRespository nonProfitRespository;
   NonprofitBloc({required this.nonProfitRespository})
-      : super(NonprofitState(status: NonProfitStatus.initial)) {
+      : super(const NonprofitState(status: NonProfitStatus.initial)) {
     on<FetchNonProfitList>(_fetchNonProfitList);
     on<FetchNonProfitItem>(_fetchNonProfitItem);
     on<FetchNonProfitsByCategory>(_fetchNonProfitsByCategory);
